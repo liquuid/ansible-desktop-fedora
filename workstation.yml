@@ -1,6 +1,6 @@
 ---
-
 - hosts: local
+  remote_user: root
   vars_files:
     - group_vars/all.yml
 
@@ -15,5 +15,5 @@
     - dev
     - multimedia
     - virtualization
-    - users
-    - awesome
+    #- users
+    #- awesome

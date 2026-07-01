@@ -1,4 +1,8 @@
 ---
+- name: Package | Install lists packages
+  dnf:
+    name: python3-dnf
+    
 - name: Setup SSHD
   service: name=sshd state=started enabled=yes
 
@@ -51,6 +55,9 @@
       - util-linux-user
       - qt5ct
       - yaru-theme
+      - zoxide
+      - distrobox
+    
       #- gnome-shell-extension-netspeed
       #- gnome-shell-theme-selene
       #- chrome-gnome-shell
@@ -79,6 +86,7 @@
       - ffmpegthumbnailer
       - ffmpegthumbs
       
+      
     state: installed
 
 - name: Install webp thumbnailer
@@ -89,3 +97,24 @@
     group: root
     mode: '0644'
 
+- name: Replace ffmpeg-free
+  shell: dnf swap ffmpeg-free ffmpeg --allowerasing -y
+
+- name: Add flathub
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+- name: Install "Snap"
+  dnf: name=snapd state=latest 
+
+- name: Enable "Snap"
+  service: name=snapd state=started enabled=yes
+
+- name: Create "snap" symlink
+  file:
+    src:  /var/lib/snapd/snap
+    dest: /snap
+    owner: root
+    state: link

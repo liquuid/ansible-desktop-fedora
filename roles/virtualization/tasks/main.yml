@@ -3,9 +3,10 @@
 - name: Virtualization | Install lists packages
   dnf:
     name:
-      - VirtualBox
+      #- VirtualBox
       - vagrant
-      - libvirt-daemon-vbox
+      - vagrant-libvirt
+      #- libvirt-daemon-vbox
       #- docker-vim
       #- docker-selinux
       #- docker

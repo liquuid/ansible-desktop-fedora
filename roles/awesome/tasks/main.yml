@@ -14,7 +14,7 @@
       - xfce4-power-manager
       - blueberry
       - mpv
-      - slim
+      #- slim
       - sakura
       - dmenu
       - rofi

@@ -35,4 +35,5 @@
       - blender
       - kdenlive
       - obs-studio
+      - krita
     state: latest
