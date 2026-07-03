@@ -4,13 +4,5 @@
     name: liquuid
     comment: liquuid
     uid: 1000
-    groups: wheel, vboxusers, libvirt, kvm
+    groups: wheel, libvirt, kvm
     append: yes
-
-- name: Add the user 'gu' 
-  user:
-    name: gu
-    comment: gu
-    uid: 1001
-    append: yes
-

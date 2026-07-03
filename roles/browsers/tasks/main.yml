@@ -1,5 +1,4 @@
 ---
-
 - name: Google Chrome | Install lists packages
   dnf:
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
@@ -20,15 +19,7 @@
     name: brave-browser
     state: latest
 
-- name: Install Opera
-  become: yes
-  dnf:
-    name: https://download3.operacdn.com/ftp/pub/opera/desktop/109.0.5097.68/linux/opera-stable_109.0.5097.68_amd64.rpm
-    state: installed
-    disable_gpg_check: yes
-
-- name: Install Chromium
-  become: yes
-  dnf:
-    name: chromium
-    state: latest
+- name: Install Zen Browser
+  flatpak:
+    name: app.zen_browser.zen
+    state: present

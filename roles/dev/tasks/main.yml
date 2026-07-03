@@ -1,100 +1,42 @@
 ---
-- name: Install X11 libs
+- name: Install Dev tools
+  dnf:
+    name: '@Development tools'
+    state: present
+
+- name: Install dev tools
   dnf:
     name:
-      - libX11-devel
-      - libXcursor-devel 
-      - libXrandr-devel
-      - libXinerama-devel
-      - libXi-devel
-      - mesa-libGL-devel
+
       - gcc-c++
-      - SDL2_gfx-devel
-      - SDL2_image-devel
-      - SDL2_mixer-devel
-      - SDL2_ttf-devel
-      - SDL2-devel
-      - libXxf86vm-devel
       - intltool
-      - glib-devel
-      - glib2-devel
       - libtool
       - fira-code-fonts
       - cargo
-      - java-1.8.0-openjdk-devel 
+      - nix
+      - uv
+      - conda
+      - python-unversioned-command
+      - golang
+      - binutils
+      - gcc
+      - make
+      - cmake
+      - patch
+      
+    disable_gpg_check: no
     state: installed
 
-- name: Uninstall "phpstorm" 
-  flatpak:
-    name: com.jetbrains.PhpStorm
-    state: absent
-
-- name: Uninstall "goland" 
-  flatpak:
-    name: com.jetbrains.Goland
-    state: absent
-
-- name: Uninstall "Pycharm-Professional"                      
-  flatpak:
-    name: com.jetbrains.Pycharm-Professional
-    state: absent
-
-- name: Uninstall "WebStorm"                      
-  flatpak:
-    name: com.jetbrains.WebStorm
-    state: absent
-
-- name: Uninstall "DBeaver"
+- name: Install "DBeaver"
   flatpak:
     name: io.dbeaver.DBeaverCommunity 
-    state: absent
-
-- name: Install "phpstorm" 
-  snap:
-    name: phpstorm
-    state: present
-    classic: yes
-
-- name: Install "goland" 
-  snap:
-    name: goland
-    state: present
-    classic: yes
-
-- name: Install "Pycharm-Professional"                      
-  snap:
-    name: pycharm-professional
-    state: present
-    classic: yes
-
-- name: Install "WebStorm"                      
-  snap:
-    name: webstorm
-    state: present
-    classic: yes
-
-- name: Install "Android Studio"                      
-  snap:
-    name: android-studio
-    state: present
-    classic: yes
-
-- name: Install "DBeaver"
-  snap:
-    name: dbeaver-ce 
-    state: present
-    classic: yes
-
-
-
-- name: Install "insomnia" 
-  snap:
-    name: insomnia
     state: present
 
-- name: Install "DBeaver CE" 
-  snap:
-    name: dbeaver-ce        
+- name: Install "Android Studio"
+  flatpak:
+    name: com.google.AndroidStudio
+    state: present
+
 
 - name: Add MS keys
   rpm_key:
@@ -111,42 +53,51 @@
 - name: VSCode
   dnf: pkg=code state=latest
 
-- name: Add docker repository
-  yum_repository:
-    name: docker
-    description: docker repo
-    baseurl: https://download.docker.com/linux/fedora/39/x86_64/stable
-    gpgkey: https://download.docker.com/linux/fedora/gpg
-    gpgcheck: true
-    enabled: yes
+#- name: Add docker repository
+#  yum_repository:
+#    name: docker
+#    description: docker repo
+#    baseurl: https://download.docker.com/linux/fedora/39/x86_64/stable
+#    gpgkey: https://download.docker.com/linux/fedora/gpg
+#    gpgcheck: true
+#    enabled: yes
 
-- name: Install Docker
-  dnf: 
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    state: latest
+#- name: Install Docker
+#  dnf: 
+#    name:
+#      - docker-ce
+#      - docker-ce-cli
+#      - containerd.io
+#    state: latest
 
 - name: Install No Machine
   dnf:
-    name: https://download.nomachine.com/download/8.11/Linux/nomachine_8.11.3_4_x86_64.rpm
+    name: https://web9001.nomachine.com/download/9.7/Linux/nomachine_9.7.3_1_x86_64.rpm
     disable_gpg_check: true
     state: present
 
-- name: Start docker service
-  service:
-    name: docker
-    state: started
+#- name: Start docker service
+# service:
+#    name: docker
+#    state: started
 
 - name: Install "micro"
   dnf:
     name: micro
 
-- name: Install "zeal"
-  dnf:
-    name: zeal
-
-- name: VSCode
+- name: Android Tools
   dnf:
     name: android-tools
+
+- name: VSCode
+  dnf: pkg=code state=latest
+
+- name: Install Eng Stuff
+  flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - org.fritzing.Fritzing
+    - org.openscad.OpenSCAD
+    - com.prusa3d.PrusaSlicer
+    - com.ultimaker.cura

@@ -12,14 +12,10 @@
 - name: Install RPMfusion nonfree
   dnf: name=https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-branched.noarch.rpm state=latest disable_gpg_check=yes
 
-- name: Team Viewer
-  dnf: name=https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm disable_gpg_check=yes
-
 - name: Package | Install lists packages
   dnf:
     name:
       - zsh
-      #- geary
       - bash-completion
       - openssh-server
       - vim
@@ -49,7 +45,7 @@
       - p7zip
       - mc
       - nnn
-      - syncthing
+      #- syncthing
       - sshfs
       - gnome-tweak-tool
       - util-linux-user
@@ -105,16 +101,3 @@
     name: flathub
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-
-- name: Install "Snap"
-  dnf: name=snapd state=latest 
-
-- name: Enable "Snap"
-  service: name=snapd state=started enabled=yes
-
-- name: Create "snap" symlink
-  file:
-    src:  /var/lib/snapd/snap
-    dest: /snap
-    owner: root
-    state: link

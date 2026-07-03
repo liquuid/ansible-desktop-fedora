@@ -12,8 +12,7 @@
       - x264
       - x265
       - audacity
-      - transmission-qt
-      - ktorrent
+      - transmission-gtk
       - clementine
       - kdenlive
       #- pitivi
@@ -24,7 +23,5 @@
       - gstreamer1-plugins-ugly
       - gstreamer1-vaapi
       - PackageKit-gstreamer-plugin
-      - steam
-      - dolphin-emu
       - strawberry
     state: latest

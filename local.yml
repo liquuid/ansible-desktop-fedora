@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  pre_tasks:
+    - name: pre-run | update package cache ( RHEL )
+      tags: always
+      dnf: update_cache=yes
+
+- hosts: localhost
+  roles:
+
+    - common       # List of essential packages
+    - design       # Design pack
+    - latex        # Latex and ide texmaker
+    - composer
+    - nodejs
+    - browsers
+    - dev
+    - multimedia
+    - virtualization
+    - users
+    - awesome

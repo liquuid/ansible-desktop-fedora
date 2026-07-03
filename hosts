@@ -1,6 +1,2 @@
-
 [local]
 localhost           ansible_connection=local
-
-[fedora]
-192.168.0.44

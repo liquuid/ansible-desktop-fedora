@@ -1,23 +1,12 @@
 ---
-
 - name: Virtualization | Install lists packages
   dnf:
     name:
-      #- VirtualBox
-      - vagrant
-      - vagrant-libvirt
-      #- libvirt-daemon-vbox
-      #- docker-vim
-      #- docker-selinux
-      #- docker
-      - docker-compose
+      - virt-manager
+      - distrobox
       - podman
-      - binutils
-      - gcc
-      - make
-      - cmake
-      - go
-      - patch
+      - podman-compose
+      - podman-docker
       - libgomp
       - glibc-headers
       - glibc-devel
@@ -25,10 +14,3 @@
       - kernel-devel
       - dkms
     state: latest
-
-      #- name: Enable docker
-      #  service:
-      #    name: docker
-      #    state: started
-      #    enabled: yes
-
