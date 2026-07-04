@@ -11,11 +11,8 @@
     name:
       - gimp
       - gimp-elsamuko
-      - gimp-lensfun
-      - gimp-separate+
       - gimp-resynthesizer
-      - gimp-wavelet-denoise-plugin
-      - gimp-lqr-plugin
+      #- gimp-wavelet-denoise-plugin
       - gimp-paint-studio
       - gimp-help-pt_BR
       - gimp-fourier-plugin

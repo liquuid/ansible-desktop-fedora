@@ -1,10 +1,10 @@
 ---
 - name: Install Dev tools
   dnf:
-    name: '@Development tools'
+    name: "@development-tools"
     state: present
 
-- name: Install dev tools
+- name: Install Dev Stuff
   dnf:
     name:
 

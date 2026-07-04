@@ -12,7 +12,7 @@
       - network-manager-applet
       - nitrogen
       - xfce4-power-manager
-      - blueberry
+      #- blueberry
       - mpv
       #- slim
       - sakura
