@@ -92,6 +92,11 @@
 - name: VSCode
   dnf: pkg=code state=latest
 
+- name: Install Cursor AI Agent
+  shell: curl -fsSL https://cursor.com/install | bash
+  args:
+    creates: ~/.local/bin/cursor-agent
+
 - name: Install Eng Stuff
   flatpak:
     name: "{{ item }}"
@@ -101,3 +106,34 @@
     - org.openscad.OpenSCAD
     - com.prusa3d.PrusaSlicer
     - com.ultimaker.cura
+
+- name: Create /opt/antigravity directory
+  become: yes
+  file:
+    path: /opt/antigravity
+    state: directory
+    mode: '0755'
+
+- name: Download and extract Antigravity
+  become: yes
+  unarchive:
+    src: https://antigravity.google/download/linux-x64/antigravity-2.5.0.tar.gz
+    dest: /opt/antigravity
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+    creates: /opt/antigravity/antigravity
+
+- name: Create Antigravity desktop entry
+  become: yes
+  copy:
+    dest: /usr/share/applications/antigravity.desktop
+    content: |
+      [Desktop Entry]
+      Name=Antigravity 2.5.0
+      Comment=Antigravity Agent Manager
+      Exec=/opt/antigravity/antigravity
+      Icon=/opt/antigravity/icon.png
+      Terminal=false
+      Type=Application
+      Categories=Development;
+    mode: '0644'
