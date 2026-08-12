@@ -3,19 +3,23 @@
   connection: local
   become: true
   pre_tasks:
-    - name: pre-run | update package cache ( RHEL )
+    - name: pre-run | update package cache
       tags: always
       dnf: update_cache=yes
 
 - hosts: localhost
+  become: true
   roles:
 
     - common       # List of essential packages
+    - plasma
     - design       # Design pack
-    - latex        # Latex and ide texmaker
+    - comunication
+    #- latex        # Latex and ide texmaker
     - browsers
     - dev
     - multimedia
     - virtualization
-    - users
-    - awesome
+    - zfs
+    #- users
+    #- awesome

@@ -3,6 +3,10 @@
 - name: Package | Install lists packages
   dnf:
     name:
+      - audacity
+      - lmms
+      - easyeffects
+      - calibre 
       - mpv
       - webp-pixbuf-loader
       - libwebp
@@ -15,7 +19,7 @@
       - transmission-gtk
       - clementine
       - kdenlive
-      #- pitivi
+      - pitivi
       - gstreamer1-plugin-openh264
       - gstreamer1-plugins-bad-free-extras
       - gstreamer1-plugins-bad-freeworld
@@ -25,3 +29,5 @@
       - PackageKit-gstreamer-plugin
       - strawberry
     state: latest
+
+

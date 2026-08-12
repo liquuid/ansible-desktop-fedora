@@ -1,0 +1,15 @@
+- name: Package | Install lists packages
+  dnf:
+    name:
+      - gnome-shell-extension-netspeed
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-freon
+      - gnome-shell-extension-gamemode
+      - gnome-shell-extension-gsconnect
+      - gnome-shell-extension-pomodoro
+      - gnome-shell-extension-system-monitor-applet
+      - gnome-shell-extension-topicons-plus
+      - gnome-shell-theme-yaru
+
+

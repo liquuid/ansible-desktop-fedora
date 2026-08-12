@@ -13,10 +13,10 @@
     baseurl: https://brave-browser-rpm-release.s3.brave.com/x86_64/
     gpgkey: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
-- name: Install Brave
+- name: Install Brave Origin
   become: yes
   dnf:
-    name: brave-browser
+    name: brave-origin
     state: latest
 
 - name: Install Zen Browser

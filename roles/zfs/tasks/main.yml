@@ -1,0 +1,51 @@
+---
+    - name: Garantir que o sistema está atualizado
+      dnf:
+        name: "*"
+        state: latest
+      register: system_update
+
+    - name: Instalar dependências para compilação do módulo ZFS (DKMS)
+      dnf:
+        name:
+          - kernel-devel
+          - kernel-headers
+          - dkms
+        state: present
+
+    - name: Adicionar o repositório OpenZFS
+      # Usamos o shell para resolver a variável $(rpm -E %dist) dinamicamente (ex: .fc39, .fc40)
+      shell: "dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1$(rpm --eval %{dist}).noarch.rpm"
+      args:
+        creates: /etc/yum.repos.d/zfs.repo
+
+    - name: Instalar o pacote OpenZFS
+      dnf:
+        name: zfs
+        state: present
+        enablerepo: zfs
+
+    - name: Carregar o módulo do kernel ZFS
+      modprobe:
+        name: zfs
+        state: present
+
+    - name: Configurar o módulo ZFS para carregar no boot
+      copy:
+        dest: /etc/modules-load.d/zfs.conf
+        content: |
+          zfs
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Habilitar e iniciar os serviços essenciais do ZFS
+      systemd:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      loop:
+        - zfs-import-cache.service
+        - zfs-mount.service
+        - zfs.target
+        
