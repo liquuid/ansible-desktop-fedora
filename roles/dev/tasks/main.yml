@@ -106,6 +106,7 @@
     - org.openscad.OpenSCAD
     - com.prusa3d.PrusaSlicer
     - com.ultimaker.cura
+    - net.cozic.joplin_desktop
 
 - name: Create /opt/antigravity-ide directory
   become: yes

@@ -33,4 +33,10 @@
       - kdenlive
       - obs-studio
       - krita
+      - glaxnimate
+      - handbrake
+      - vlc
+      - audacity
+      - kxstitch
+     
     state: latest

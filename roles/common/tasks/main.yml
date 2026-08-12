@@ -15,73 +15,76 @@
 - name: Package | Install lists packages
   dnf:
     name:
-      - zsh
-      - bash-completion
-      - openssh-server
-      - vim
-      - git
-      - NetworkManager-tui
-      - unar
-      - htop
-      - tree
-      - dstat
-      - screen
-      - curl
-      - wget
-      - ccze
-      - tmux
-      - terminator
-      - tig
-      - unzip
-      - fastfetch
-      - iotop
-      - pciutils
-      - usbutils
-      - nmap
-      - youtube-dl
-      - squashfs-tools
-      - shntool
-      - unrar
-      - p7zip
-      - mc
-      - nnn
-      #- syncthing
-      - sshfs
-      - gnome-tweak-tool
-      - util-linux-user
-      - qt5ct
-      - yaru-theme
-      - zoxide
-      - distrobox
-    
-      #- gnome-shell-extension-netspeed
-      #- gnome-shell-theme-selene
-      #- chrome-gnome-shell
-      #- gnome-shell-extension-appindicator
-      #- gnome-shell-extension-desktop-icons
-      #- gnome-shell-extension-dash-to-dock
-      #- gnome-shell-extension-freon
-      #- gnome-shell-extension-gamemode
-      #- gnome-shell-extension-gsconnect
-      #- gnome-shell-extension-media-player-indicator
-      #- gnome-shell-extension-pomodoro
-      #- gnome-shell-extension-system-monitor-applet
-      #- gnome-shell-extension-topicons-plus
-      #- gnome-shell-theme-yaru
-      - libwebp-tools
-      - pdf2djvu
-      - poppler-utils
       - ImageMagick
-      - xclip
-      - libreoffice-langpack-pt-BR
+      - NetworkManager-tui
+      - bash-completion
+      - bat
+      - btop
+      - byobu
+      - ccze
       - compsize
-      - foliate
-      - yakuake
-      - fortune-mod
-      - zsh
+      - curl
+      - dejavu-fonts-all
+      - distrobox
+      - dstat
+      - fastfetch
+      - fira-code-fonts
       - ffmpegthumbnailer
       - ffmpegthumbs
-      
+      - flac
+      - foliate
+      - fortune-mod
+      - git
+      - gnome-tweak-tool
+      - htop
+      - iotop
+      - jetbrains-mono-fonts-all
+      - libreoffice-langpack-pt-BR
+      - libwebp-tools
+      - mc
+      - nix
+      - nmap
+      - nnn
+      - openssh-server
+      - p7zip
+      - pciutils
+      - pdf2djvu
+      - poppler-utils
+      - powerline-fonts
+      - qt5ct
+      - screen
+      - shntool
+      - squashfs-tools
+      - sshfs
+      - terminator
+      - tig
+      - tmux
+      - tree
+      - unar
+      - unrar
+      - unzip
+      - usbutils
+      - util-linux-user
+      - vim
+      - wget
+      - xclip
+      - yakuake
+      - yaru-theme
+      - youtube-dl
+      - yt-dlp
+      - zoxide
+      - zsh
+      - cockpit
+      - cockpit-bridge
+      - cockpit-composer
+      - cockpit-files
+      - cockpit-machines
+      - cockpit-podman
+      - cockpit-storaged
+      - cockpit-system
+      - cockpit-ws
+      - cockpit-image-builder 
+      - cockpit-networkmanager
       
     state: installed
 
@@ -101,3 +104,12 @@
     name: flathub
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+
+
+- name: Enable cockpit web console
+  service:
+    name: cockpit.socket
+    state: started
+    enabled: true
+

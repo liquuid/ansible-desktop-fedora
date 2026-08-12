@@ -1,0 +1,27 @@
+---
+- name: uninstall Teams
+  flatpak:
+    name: com.microsoft.Teams
+    state: absent
+
+- name: uninstall Anydesk
+  flatpak:
+    name: com.anydesk.Anydesk
+    state: absent
+
+- name: uninstall Geary
+  flatpak:
+    name: org.gnome.Geary
+    state: absent
+
+
+- name: uninstall Slack
+  flatpak:
+    name: com.slack.Slack
+    state: absent
+
+- name: Install Discord 
+  flatpak:
+    name: com.discordapp.Discord
+    state: present
+
