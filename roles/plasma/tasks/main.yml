@@ -1,0 +1,33 @@
+- name: Package | Install lists packages
+  dnf:
+    name:
+      - yakuake
+      - plasma-browser-integration
+      - kaccounts-providers
+      - kaccounts-integration-qt6
+      - kaccounts-integration-qt5
+      - isoimagewriter
+      - tesseract
+      - nheko
+      - akregator
+      - kmail
+      - filelight
+      - kio-gdrive
+      - kio-fuse
+      - kio-admin
+      - kio-extras
+      - nextcloud-client-dolphin
+      - nextcloud-client
+      - transmission-qt
+       
+- name: Install Misc tools
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - net.cozic.joplin_desktop
+    - io.appflowy.AppFlowy
+    - com.github.tchx84.Flatseal
+    - rocks.koreader.KOReader
+
+

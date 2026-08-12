@@ -1,4 +1,8 @@
 ---
+- name: Package | Install lists packages
+  dnf:
+    name: python3-dnf
+    
 - name: Setup SSHD
   service: name=sshd state=started enabled=yes
 
@@ -8,71 +12,80 @@
 - name: Install RPMfusion nonfree
   dnf: name=https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-branched.noarch.rpm state=latest disable_gpg_check=yes
 
-
-
 - name: Package | Install lists packages
   dnf:
     name:
-      - zsh
-      - geary
-      - bash-completion
-      - openssh-server
-      - vim
-      - git
+      - ImageMagick
       - NetworkManager-tui
-      - unar
-      - htop
-      - tree
-      - dstat
-      - screen
-      - curl
-      - wget
+      - bash-completion
+      - bat
+      - btop
+      - byobu
       - ccze
-      - tmux
-      - terminator
-      - tig
-      - unzip
-      - neofetch
-      - iotop
-      - pciutils
-      - usbutils
-      - nmap
-      - youtube-dl
-      - squashfs-tools
-      - shntool
-      - unrar
-      - p7zip
-      - mc
-      - nnn
-      - sshfs
+      - compsize
+      - curl
+      - dejavu-fonts-all
+      - distrobox
+      - dstat
+      - fastfetch
+      - fira-code-fonts
+      - ffmpegthumbnailer
+      - ffmpegthumbs
+      - flac
+      - foliate
+      - fortune-mod
+      - git
       - gnome-tweak-tool
-      - util-linux-user
-      - qt5ct
-      - yaru-theme
-      - ubuntu-title-fonts
-      - gnome-shell-extension-netspeed
-      - gnome-shell-theme-selene
-      - chrome-gnome-shell
-      - gnome-shell-extension-appindicator
-      - gnome-shell-extension-desktop-icons
-      - gnome-shell-extension-dash-to-dock
-      - gnome-shell-extension-freon
-      - gnome-shell-extension-gamemode
-      - gnome-shell-extension-gsconnect
-      - gnome-shell-extension-media-player-indicator
-      - gnome-shell-extension-pomodoro
-      - gnome-shell-extension-system-monitor-applet
-      - gnome-shell-extension-topicons-plus
-      - gnome-shell-theme-yaru
+      - htop
+      - iotop
+      - jetbrains-mono-fonts-all
+      - libreoffice-langpack-pt-BR
       - libwebp-tools
+      - mc
+      - nix
+      - nmap
+      - nnn
+      - openssh-server
+      - p7zip
+      - pciutils
       - pdf2djvu
       - poppler-utils
-      - ImageMagick
+      - powerline-fonts
+      - qt5ct
+      - screen
+      - shntool
+      - squashfs-tools
+      - sshfs
+      - terminator
+      - tig
+      - tmux
+      - tree
+      - unar
+      - unrar
+      - unzip
+      - usbutils
+      - util-linux-user
+      - vim
+      - wget
       - xclip
-      - libreoffice-langpack-pt-BR
-      - compsize
-      - foliate
-
+      - yakuake
+      - yaru-theme
+      - youtube-dl
+      - yt-dlp
+      - zoxide
+      - zsh
+      - cockpit
+      - cockpit-bridge
+      - cockpit-composer
+      - cockpit-files
+      - cockpit-machines
+      - cockpit-podman
+      - cockpit-storaged
+      - cockpit-system
+      - cockpit-ws
+      - cockpit-image-builder 
+      - cockpit-networkmanager
+      
     state: installed
 
 - name: Install webp thumbnailer
@@ -82,4 +95,21 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Replace ffmpeg-free
+  shell: dnf swap ffmpeg-free ffmpeg --allowerasing -y
+
+- name: Add flathub
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+
+
+- name: Enable cockpit web console
+  service:
+    name: cockpit.socket
+    state: started
+    enabled: true
 

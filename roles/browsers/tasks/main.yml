@@ -1,5 +1,4 @@
 ---
-
 - name: Google Chrome | Install lists packages
   dnf:
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
@@ -14,8 +13,13 @@
     baseurl: https://brave-browser-rpm-release.s3.brave.com/x86_64/
     gpgkey: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
-- name: Install Brave
+- name: Install Brave Origin
   become: yes
   dnf:
-    name: brave-browser
+    name: brave-origin
     state: latest
+
+- name: Install Zen Browser
+  flatpak:
+    name: app.zen_browser.zen
+    state: present

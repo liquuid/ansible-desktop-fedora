@@ -1,82 +1,49 @@
 ---
-- name: Install X11 libs
+- name: Install Dev tools
+  dnf:
+    name: "@development-tools"
+    state: present
+
+- name: Install Dev Stuff
   dnf:
     name:
-      - libX11-devel
-      - libXcursor-devel 
-      - libXrandr-devel
-      - libXinerama-devel
-      - libXi-devel
-      - mesa-libGL-devel
+
       - gcc-c++
-      - SDL2_gfx-devel
-      - SDL2_image-devel
-      - SDL2_mixer-devel
-      - SDL2_ttf-devel
-      - SDL2-devel
-      - libXxf86vm-devel
       - intltool
-      - glib-devel
-      - glib2-devel
       - libtool
       - fira-code-fonts
+      - cargo
+      - nix
+      - uv
+      - conda
+      - python-unversioned-command
+      - golang
+      - binutils
+      - gcc
+      - make
+      - cmake
+      - patch
+      
+    disable_gpg_check: no
     state: installed
 
-- name: Install "Snap"
-  dnf: name=snapd state=latest 
+- name: Install "DBeaver"
+  flatpak:
+    name: io.dbeaver.DBeaverCommunity 
+    state: present
 
-- name: Enable "Snap"
-  service: name=snapd state=started enabled=yes
+- name: Install "Android Studio"
+  flatpak:
+    name: com.google.AndroidStudio
+    state: present
 
-- name: Create "snap" symlink
-  file:
-    src:  /var/lib/snapd/snap
-    dest: /snap
-    owner: root
-    state: link
-
-
-- name: Install "phpstorm" with option --classic
-  snap:
-    name: phpstorm
-    classic: yes
-
-- name: Install "goland" with option --classic
-  snap:
-    name: goland
-    classic: yes
-
-
-- name: Install "clion" with option --classic
-  snap:
-    name: clion
-    classic: yes
-
-- name: Install "webstorm" with option --classic
-  snap:
-    name: webstorm
-    classic: yes
-
-- name: Install "pycharm-professional" with option --classic
-  snap:
-    name: pycharm-professional
-    classic: yes
-
-- name: remove "insomnia" 
-  snap:
-    name: insomnia
-    state: absent
-
-- name: Install "postbird" 
-  snap:
-    name: postbird        
 
 - name: Add MS keys
   rpm_key:
     state: present
     key: https://packages.microsoft.com/keys/microsoft.asc
 
-- name: Add repository
+- name: Add VSCode repository
   yum_repository:
     name: vscode
     description: vscode repo
@@ -86,24 +53,52 @@
 - name: VSCode
   dnf: pkg=code state=latest
 
-- name: Install "codeblocks"
-  dnf:
-    name: codeblocks
+#- name: Add docker repository
+#  yum_repository:
+#    name: docker
+#    description: docker repo
+#    baseurl: https://download.docker.com/linux/fedora/39/x86_64/stable
+#    gpgkey: https://download.docker.com/linux/fedora/gpg
+#    gpgcheck: true
+#    enabled: yes
 
+#- name: Install Docker
+#  dnf: 
+#    name:
+#      - docker-ce
+#      - docker-ce-cli
+#      - containerd.io
+#    state: latest
 
-- name: Install "anjuta"
+- name: Install No Machine
   dnf:
-    name: anjuta
+    name: https://web9001.nomachine.com/download/9.7/Linux/nomachine_9.7.3_1_x86_64.rpm
+    disable_gpg_check: true
+    state: present
 
-- name: Install "arduino"
-  dnf:
-    name: arduino
+#- name: Start docker service
+# service:
+#    name: docker
+#    state: started
 
 - name: Install "micro"
   dnf:
     name: micro
 
-- name: Install "zeal"
+- name: Android Tools
   dnf:
-    name: zeal
+    name: android-tools
 
+- name: VSCode
+  dnf: pkg=code state=latest
+
+- name: Install Eng Stuff
+  flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - org.fritzing.Fritzing
+    - org.openscad.OpenSCAD
+    - com.prusa3d.PrusaSlicer
+    - com.ultimaker.cura
+    - net.cozic.joplin_desktop

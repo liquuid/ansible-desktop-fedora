@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  pre_tasks:
+    - name: pre-run | update package cache
+      tags: always
+      dnf: update_cache=yes
+
+- hosts: localhost
+  become: true
+  roles:
+
+    - common       # List of essential packages
+    - plasma
+    - design       # Design pack
+    - comunication
+    #- latex        # Latex and ide texmaker
+    - browsers
+    - dev
+    - multimedia
+    - virtualization
+    - zfs
+    #- users
+    #- awesome

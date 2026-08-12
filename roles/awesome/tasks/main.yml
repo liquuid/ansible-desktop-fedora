@@ -12,9 +12,9 @@
       - network-manager-applet
       - nitrogen
       - xfce4-power-manager
-      - blueberry
+      #- blueberry
       - mpv
-      - slim
+      #- slim
       - sakura
       - dmenu
       - rofi
@@ -24,3 +24,4 @@
       - lynx
       - pcmanfm
       - krusader
+      - xfce4-screensaver
