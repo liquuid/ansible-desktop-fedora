@@ -29,5 +29,5 @@
     - io.appflowy.AppFlowy
     - com.github.tchx84.Flatseal
     - rocks.koreader.KOReader
-
-
+    - com.discordapp.Discord
+    - org.fedoraproject.MediaWriter

@@ -4,6 +4,7 @@
   dnf:
     name:
       - audacity
+      - audacious
       - lmms
       - easyeffects
       - calibre 
@@ -28,6 +29,14 @@
       - gstreamer1-vaapi
       - PackageKit-gstreamer-plugin
       - strawberry
+       
     state: latest
+
+- name: Install Multimedia Misc
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - org.jeffvli.feishin
 
 
