@@ -10,13 +10,4 @@
 - hosts: localhost
   become: true
   roles:
-
-    - common       # List of essential packages
-    - plasma
-    - design       # Design pack
-    - comunication
-    - browsers
-    - dev
-    - multimedia
-    - virtualization
-    #- awesome
+    - zfs
