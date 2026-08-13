@@ -25,11 +25,6 @@
         state: present
         enablerepo: zfs
 
-    - name: Carregar o módulo do kernel ZFS
-      modprobe:
-        name: zfs
-        state: present
-
     - name: Configurar o módulo ZFS para carregar no boot
       copy:
         dest: /etc/modules-load.d/zfs.conf
@@ -48,4 +43,10 @@
         - zfs-import-cache.service
         - zfs-mount.service
         - zfs.target
-        
+
+    - name: Carregar o módulo do kernel ZFS
+      modprobe:
+        name: zfs
+        state: present
+
+       
