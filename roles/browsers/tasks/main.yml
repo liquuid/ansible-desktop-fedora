@@ -19,12 +19,6 @@
     name: brave-origin
     state: latest
 
-- name: Install Brave Origin
-  become: yes
-  dnf:
-    name: brave-origin
-    state: latest
-
 - name: Install Zen Browser
   flatpak:
     name: app.zen_browser.zen

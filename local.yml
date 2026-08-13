@@ -15,11 +15,9 @@
     - plasma
     - design       # Design pack
     - comunication
-    #- latex        # Latex and ide texmaker
     - browsers
     - dev
     - multimedia
     - virtualization
     - zfs
-    #- users
     #- awesome
