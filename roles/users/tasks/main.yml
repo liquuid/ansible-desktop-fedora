@@ -1,8 +1,0 @@
----
-- name: Add the user 'liquuid' 
-  user:
-    name: liquuid
-    comment: liquuid
-    uid: 1000
-    groups: wheel, libvirt, kvm
-    append: yes
