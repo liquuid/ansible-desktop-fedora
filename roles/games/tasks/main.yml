@@ -1,0 +1,20 @@
+---
+- name: Install Minimal Tools
+  dnf:
+    name:
+      - arandr
+
+
+
+- name: Install Games
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - org.yuzu_emu.yuzu 
+    - org.citra_emu.citra
+    - org.DolphinEmu.dolphin-emu
+    - com.valvesoftware.Steam
+    - org.prismlauncher.PrismLauncher
+    - com.heroicgameslauncher.hgl
+    - com.moonlight_stream.Moonlight
