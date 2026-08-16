@@ -1,0 +1,35 @@
+---
+- name: Ensure required packages are installed
+  ansible.builtin.dnf:
+    name:
+      - NetworkManager
+      - python3-gobject  # Required for the nmcli Ansible module
+      - libvirt
+    state: present
+
+- name: Create the network bridge with static IP
+  community.general.nmcli:
+    conn_name: "{{ bridge_name }}"
+    ifname: "{{ bridge_name }}"
+    type: bridge
+    ip4: "{{ bridge_ip }}/{{ bridge_prefix }}"
+    gw4: "{{ bridge_gateway }}"
+    dns4: "{{ bridge_dns }}"
+    method4: manual
+    state: present
+
+- name: Bind physical interface to the bridge
+  community.general.nmcli:
+    conn_name: "{{ bridge_name }}-slave"
+    ifname: "{{ physical_interface }}"
+    type: bridge-slave
+    master: "{{ bridge_name }}"
+    state: present
+
+- name: Bring up the bridge connection
+  ansible.builtin.command: nmcli connection up {{ bridge_name }}
+  changed_when: false
+
+- name: Bring up the bridge slave connection
+  ansible.builtin.command: nmcli connection up {{ bridge_name }}-slave
+  changed_when: false

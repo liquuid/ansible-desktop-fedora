@@ -6,6 +6,7 @@ url_apt_key: "http://keyserver.ubuntu.com/pks/lookup?op=get&search="
 ntpserver: '0.fr.pool.ntp.org'
 
 zfs_release_version: "2-2"
+physical_interface: "enp42s0"
 
 user: liquuid
 

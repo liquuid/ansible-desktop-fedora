@@ -1,0 +1,3 @@
+---
+- name: Rebuild initramfs
+  ansible.builtin.command: dracut -f --kver {{ ansible_kernel }}

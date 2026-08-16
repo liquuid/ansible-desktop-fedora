@@ -1,0 +1,49 @@
+---
+- name: Ensure modprobe configuration for VFIO and Bluetooth exists
+  ansible.builtin.blockinfile:
+    path: /etc/modprobe.d/vfio.conf
+    create: yes
+    owner: root
+    group: root
+    mode: '0644'
+    block: |
+      options vfio-pci ids={{ gpu_pci_ids }}
+      softdep nvidia pre: vfio-pci
+      options bluetooth disable_ertm=1
+  notify: Rebuild initramfs
+
+- name: Ensure required modules are loaded at boot
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/vfio.conf
+    content: |
+      xpad
+      kvm-amd
+      vfio_pci
+      vfio_iommu_type1
+      vfio
+      dm-cache
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Rebuild initramfs
+
+- name: Ensure VFIO modules are included in the early initramfs (dracut)
+  ansible.builtin.copy:
+    dest: /etc/dracut.conf.d/10-vfio.conf
+    content: |
+      add_drivers+=" xpad kvm-amd vfio_pci vfio_iommu_type1 vfio dm-cache "
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Rebuild initramfs
+
+- name: Check current kernel arguments via grubby
+  ansible.builtin.command: grubby --info=DEFAULT
+  register: kernel_info
+  changed_when: false
+
+- name: Add IOMMU and VFIO parameters to kernel boot args
+  ansible.builtin.command: >
+    grubby --update-kernel=ALL --args="amd_iommu=on amd_iommu=pt kvm.ignore_msrs=1 vfio-pci.ids={{ gpu_pci_ids }}"
+  when: "'amd_iommu=on' not in kernel_info.stdout"
+  notify: Rebuild initramfs

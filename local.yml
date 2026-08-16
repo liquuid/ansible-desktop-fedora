@@ -20,4 +20,6 @@
     - multimedia
     - virtualization
     - games
+    #- libvirt-bridge
+    #- gpupt
     #- awesome

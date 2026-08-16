@@ -107,6 +107,7 @@
     - com.prusa3d.PrusaSlicer
     - com.ultimaker.cura
     - net.cozic.joplin_desktop
+    - rest.insomnia.Insomnia
 
 - name: Create /opt/antigravity-ide directory
   become: yes
