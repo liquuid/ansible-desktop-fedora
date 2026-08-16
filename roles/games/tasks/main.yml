@@ -1,12 +1,5 @@
 ---
-- name: Install Minimal Tools
-  dnf:
-    name:
-      - arandr
-
-
-
-- name: Install Games
+- name: Install Games Apps
   community.general.flatpak:
     name: "{{ item }}"
     state: present
