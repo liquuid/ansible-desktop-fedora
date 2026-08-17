@@ -3,7 +3,6 @@
 lexmark_e120_packages:
   - cups
   - cups-filters
-  - cups-ipp-utils
   - foomatic
   - foomatic-db
   - foomatic-db-ppds
