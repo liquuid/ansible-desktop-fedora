@@ -1,0 +1,65 @@
+---
+# Packages required for Autofs and NFS
+autofs_packages:
+  - autofs
+  - nfs-utils
+
+# Service configuration
+autofs_service_name: autofs
+autofs_service_state: started
+autofs_service_enabled: true
+
+# Autofs timeout in seconds
+autofs_timeout: 120
+
+# Master map configuration directory and filename
+autofs_master_map_d_path: /etc/auto.master.d
+autofs_master_map_file: direct.autofs
+
+# Direct map file path
+autofs_direct_map_path: /etc/auto.direct
+
+# Default mount options
+autofs_default_options: "-fstype=nfs,rw,soft,intr"
+
+# Target user for user home mount paths
+autofs_user: "{{ user | default(ansible_user_id) }}"
+
+# List of direct mount definitions
+# Supports:
+#   path: Local mount point directory
+#   location: Remote NFS export string (e.g. '192.168.0.111:/mnt/storage\\ b/...')
+#   server / export: Alternative to location
+#   options: Mount options string (e.g. '-fstype=nfs,rw,soft,intr')
+#   owner: Directory owner when creating directory
+#   group: Directory group when creating directory
+#   mode: Directory permissions mode
+#   create_dir: Boolean whether to ensure local directory exists (default: true)
+autofs_direct_mounts:
+  - path: "/home/{{ autofs_user }}/.@"
+    location: '192.168.0.111:/mnt/storage\ b/notwork/.@'
+    options: "-fstype=nfs,rw,soft,intr"
+    owner: "{{ autofs_user }}"
+    group: "{{ autofs_user }}"
+    mode: "0755"
+
+  - path: "/home/{{ autofs_user }}/Downloads"
+    location: '192.168.0.111:/mnt/storage\ b/hydra-downloads'
+    options: "-fstype=nfs,rw,soft,intr"
+    owner: "{{ autofs_user }}"
+    group: "{{ autofs_user }}"
+    mode: "0755"
+
+  - path: "/home/{{ autofs_user }}/Music"
+    location: '192.168.0.111:/mnt/storage/music'
+    options: "-fstype=nfs,rw,soft,intr"
+    owner: "{{ autofs_user }}"
+    group: "{{ autofs_user }}"
+    mode: "0755"
+
+  - path: "/mnt/isos"
+    location: '192.168.0.111:/mnt/storage\ b/software/ISOS'
+    options: "-fstype=nfs,ro,soft,intr"
+    owner: "root"
+    group: "root"
+    mode: "0755"

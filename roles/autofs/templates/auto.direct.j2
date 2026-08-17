@@ -1,0 +1,12 @@
+# Autofs direct mount points (Ansible managed)
+{% for mount in autofs_direct_mounts %}
+{% set mount_opts = mount.options | default(autofs_default_options) %}
+{% if mount.location is defined %}
+{% set loc = mount.location %}
+{% elif mount.server is defined and mount.export is defined %}
+{% set loc = mount.server ~ ':' ~ mount.export %}
+{% else %}
+{% set loc = '' %}
+{% endif %}
+{{ mount.path }} {{ mount_opts }} {{ loc }}
+{% endfor %}

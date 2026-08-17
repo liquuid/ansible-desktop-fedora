@@ -3,6 +3,6 @@ bridge_name: "br0"
 bridge_ip: "192.168.0.100"
 bridge_prefix: "24"
 bridge_gateway: "192.168.0.1"
-bridge_dns: "1.1.1.1,8.8.8.8"
+bridge_dns: "192.168.0.110,1.1.1.1,8.8.8.8"
 
 physical_interface: "enp42s0"

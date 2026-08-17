@@ -1,0 +1,50 @@
+---
+- name: Autofs | Install required packages
+  ansible.builtin.dnf:
+    name: "{{ autofs_packages }}"
+    state: present
+
+- name: Autofs | Ensure /etc/auto.master.d directory exists
+  ansible.builtin.file:
+    path: "{{ autofs_master_map_d_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Autofs | Ensure local mount point directories exist
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0755') }}"
+  loop: "{{ autofs_direct_mounts }}"
+  when:
+    - autofs_direct_mounts is defined
+    - item.create_dir | default(true) | bool
+  failed_when: false
+
+- name: Autofs | Configure master map entry in /etc/auto.master.d
+  ansible.builtin.template:
+    src: direct.autofs.j2
+    dest: "{{ autofs_master_map_d_path }}/{{ autofs_master_map_file }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload autofs
+
+- name: Autofs | Configure direct map file
+  ansible.builtin.template:
+    src: auto.direct.j2
+    dest: "{{ autofs_direct_map_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload autofs
+
+- name: Autofs | Ensure autofs service is enabled and started
+  ansible.builtin.service:
+    name: "{{ autofs_service_name }}"
+    state: "{{ autofs_service_state }}"
+    enabled: "{{ autofs_service_enabled }}"
