@@ -1,0 +1,50 @@
+---
+# Packages required for CUPS printing and Lexmark PCL/Gutenprint support
+lexmark_e120_packages:
+  - cups
+  - cups-filters
+  - cups-ipp-utils
+  - foomatic
+  - foomatic-db
+  - foomatic-db-ppds
+  - gutenprint
+  - gutenprint-cups
+  - ghostscript
+  - system-config-printer
+
+# CUPS Service state
+lexmark_e120_service_state: started
+lexmark_e120_service_enabled: true
+
+# Printer Configuration
+lexmark_e120_printer_name: "Lexmark_E120"
+lexmark_e120_description: "Lexmark E120 Laser Printer"
+lexmark_e120_location: "Local / Network"
+
+# Device URI:
+# Network (JetDirect/RAW): "socket://192.168.0.32:9100" or "socket://192.168.0.32"
+# Network (mDNS/dnssd): "dnssd://Lexmark%20E120n._printer._tcp.local/"
+# USB: "usb://Lexmark/E120" (run 'lpinfo -v' to view exact URI)
+lexmark_e120_device_uri: "socket://192.168.0.32"
+
+# Driver Model:
+# - Gutenprint Optra E+ (recommended for E120/E120n PCL compatibility):
+#   "gutenprint.5.3://lexmark-optra_eplus/expert"
+# - Gutenprint Optra E220:
+#   "gutenprint.5.3://lexmark-optra_e220/expert"
+# - Generic PCL:
+#   "drv:///sample.drv/generpcl.ppd"
+lexmark_e120_driver: "gutenprint.5.3://lexmark-optra_eplus/expert"
+
+# Default Media / Paper size (e.g., A4, Letter)
+lexmark_e120_page_size: "A4"
+
+# Set as default printer in CUPS
+lexmark_e120_set_default: true
+
+# State: 'present' to configure/enable, 'absent' to remove from CUPS
+lexmark_e120_state: "present"
+
+# User permissions: Add desktop user to 'lp' group for printer management
+lexmark_e120_add_user_to_lpadmin: true
+lexmark_e120_user: "{{ user | default(ansible_user_id) }}"

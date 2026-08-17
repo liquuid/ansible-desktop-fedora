@@ -1,0 +1,73 @@
+---
+- name: Lexmark E120 | Install CUPS and driver packages
+  ansible.builtin.dnf:
+    name: "{{ lexmark_e120_packages }}"
+    state: present
+
+- name: Lexmark E120 | Ensure CUPS service is running and enabled
+  ansible.builtin.service:
+    name: cups
+    state: "{{ lexmark_e120_service_state }}"
+    enabled: "{{ lexmark_e120_service_enabled }}"
+
+- name: Lexmark E120 | Add desktop user to lp group
+  ansible.builtin.user:
+    name: "{{ lexmark_e120_user }}"
+    groups: lp
+    append: true
+  when:
+    - lexmark_e120_add_user_to_lpadmin | bool
+    - lexmark_e120_user is defined
+    - lexmark_e120_user | length > 0
+
+- name: Lexmark E120 | Check if printer exists in CUPS
+  ansible.builtin.command:
+    cmd: "lpstat -p {{ lexmark_e120_printer_name }}"
+  register: r_lexmark_e120_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Lexmark E120 | Configure printer in CUPS
+  when: lexmark_e120_state == 'present'
+  block:
+    - name: Lexmark E120 | Add / update printer queue via lpadmin
+      ansible.builtin.command:
+        cmd: >-
+          lpadmin -p {{ lexmark_e120_printer_name }}
+          -E
+          -v "{{ lexmark_e120_device_uri }}"
+          -m "{{ lexmark_e120_driver }}"
+          -D "{{ lexmark_e120_description }}"
+          -L "{{ lexmark_e120_location }}"
+      register: r_lpadmin_add
+      changed_when: r_lexmark_e120_check.rc != 0 or r_lpadmin_add.rc == 0
+
+    - name: Lexmark E120 | Enable printer queue and accept print jobs
+      ansible.builtin.command:
+        cmd: "{{ item }}"
+      loop:
+        - "cupsenable {{ lexmark_e120_printer_name }}"
+        - "cupsaccept {{ lexmark_e120_printer_name }}"
+      changed_when: false
+
+    - name: Lexmark E120 | Set default paper size
+      ansible.builtin.command:
+        cmd: "lpadmin -p {{ lexmark_e120_printer_name }} -o PageSize={{ lexmark_e120_page_size }}"
+      when: lexmark_e120_page_size is defined and lexmark_e120_page_size | length > 0
+      changed_when: false
+
+    - name: Lexmark E120 | Set printer as system default
+      ansible.builtin.command:
+        cmd: "lpadmin -d {{ lexmark_e120_printer_name }}"
+      when: lexmark_e120_set_default | bool
+      changed_when: false
+
+- name: Lexmark E120 | Remove printer from CUPS
+  ansible.builtin.command:
+    cmd: "lpadmin -x {{ lexmark_e120_printer_name }}"
+  when:
+    - lexmark_e120_state == 'absent'
+    - r_lexmark_e120_check.rc == 0
+  register: r_lpadmin_del
+  changed_when: r_lpadmin_del.rc == 0
