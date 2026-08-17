@@ -11,17 +11,17 @@
   become: true
   roles:
 
-    #- common       # List of essential packages
-    #- plasma
-    #- design       # Design pack
-    #- comunication
-    #- browsers
-    #- dev
-    #- multimedia
-    #- virtualization
-    #- games
+    - common       # List of essential packages
+    - plasma
+    - design       # Design pack
+    - comunication
+    - browsers
+    - dev
+    - multimedia
+    - virtualization
+    - games
     #- libvirt-bridge
     #- gpupt
     #- awesome
     #- lexmark-e120
-    - autofs
+    #- autofs
