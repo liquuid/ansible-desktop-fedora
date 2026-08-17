@@ -13,4 +13,8 @@
       - kernel-headers
       - kernel-devel
       - dkms
+      - edk2-ovmf.noarch 
+      - edk2-shell-x64.noarch 
+      - edk2-tools
+
     state: latest
