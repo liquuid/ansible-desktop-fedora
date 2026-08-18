@@ -59,7 +59,7 @@ autofs_direct_mounts:
 
   - path: "/mnt/isos"
     location: '192.168.0.111:/mnt/storage\ b/software/ISOS'
-    options: "-fstype=nfs,ro,soft,intr"
-    owner: "root"
-    group: "root"
+    options: "-fstype=nfs,rw,soft,intr"
+    owner: "{{ autofs_user }}"
+    group: "{{ autofs_user }}"
     mode: "0755"
